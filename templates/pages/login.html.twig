@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign in{% endblock %}
+
+    {% block stylesheets %}
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+        <link href="{{asset('login_page.css','css')}}" rel="stylesheet"/>
+        
+    {% endblock %}
+
+	{% block body %}
+        <section class="login_page" style="background-image: url({{asset('login_background.jpg','login_page_images')}});">
+            <div class="background">
+                <img src="{{asset('contact_icon.svg','login_page_images')}}" alt="icone de contact" class="contact_icon"/>
+                <form action="#" method="post">
+                    <div class="username">
+                        <img src="{{asset('username_icon.svg','login_page_images')}}" alt="Icone username">
+                        <input placeholder="Username" type="text" class="input">
+                    </div>
+                    <div class="password">
+                        <img src="{{asset('password_icon.svg','login_page_images')}}" alt="Icone password">
+                        <input placeholder="........" type="password" class="input">
+                    </div>
+                    <a href="#" class="login-button">Login</a>
+                    <div class="check">
+                        <label><input type="checkbox" class="checkbox">Remember me</label>
+                        <a href="#">forgot your password?</a>
+                    </div>
+                </form>
+                <img src="{{asset('line.svg','login_page_images')}}" alt="ligne" class="line" />
+            </div>
+        </section>
+
+    {% endblock %}

@@ -24,7 +24,9 @@ framework:
                 base_path: 'js' 
 
             landing_page_images:
-                base_path: 'images/landing_page'                 
+                base_path: 'images/landing_page'
+            login_page_images:
+                base_path: 'images/login_page'                     
 when@test:
     framework:
         test: true
