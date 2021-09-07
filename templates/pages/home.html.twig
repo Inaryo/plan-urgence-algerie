@@ -1,7 +1,57 @@
+
 {% extends 'base.html.twig' %}
 
+{% block title %} Acceuil {% endblock %}
+
+{% block stylesheets %}
+<link href="{{asset('landing_page.css','css') }}" rel="stylesheet"/>
+{% endblock %}
+
 {% block body %}
+    <header style="background-image: url({{asset('background.png','landing_page_images')}});">
+        <nav class="navigation_bar">
+            <div class="logo">
+                <a href='{{ path('home') }}' alt="Logo Path">LOGO HERE</a>
+            </div>
+            <ul>
+                <li><a href='{{ path('user.login') }}' alt="Sign In">Sign in</a></li>
+                <li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
+                <li><a href='{{ path('home') }}#about' alt="About Us">About Us</a></li>
+            </ul>
 
-    <h3>Test2</h3>
 
+        </nav>
+
+        <div class="slogan">
+            <div class="texts">
+                <h1>Lorem Ipsum</h1>
+                <p>
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+                </p>
+            </div>
+            <img src="{{ asset('header_image.png','landing_page_images')}}" alt="Image pour le header">
+        </div>
+    </header>
+
+    <section class="section about" id="about">
+        <h2>About Us</h2>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est </p>
+    </section>
+
+    <section class="section disasters">
+        <h2>Types of Disasters</h2>
+        <div class="disaster">
+            <div class="images"></div>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only </p>
+        </div>
+
+        </div>
+    </section>
+    <section class="newsletter">
+        <p>Join our newsletter to stay updated</p>
+        <form action="" method="post">
+            <input placeholder="Your email address" type="email" class="email">
+            <button class="newsletter-button">Join Newsletter</button>
+        </form>
+    </section>
 {% endblock %}
