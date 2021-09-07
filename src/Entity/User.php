@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -20,7 +21,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 150,
+     *      minMessage = "Le Nom doit etre supérieur a 5 caracteres",
+     *      maxMessage = "Le Nom doit etre inférieur a 150 caracteres"
+     * )
      */
     private $username;
 
@@ -32,31 +39,53 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotCompromisedPassword(
+     *     message="Mot De Passe non-securisé"
+     *  )
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,unique=true)
+     * @Assert\Email(
+     *     message="Email Invalide"
+     * )
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/\d{9}/",
+     *     message="Numéro de Telephone erroné"
+     * )
      */
-    private $zone;
+    private $mobile_phone;
+
+
+
+
+
+
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float",  nullable=true)
      */
-    private $numero;
+    private $longitude;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="float",  nullable=true)
      */
-    private $category;
+    private $latitude;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 150,
+     *      minMessage = "Le logo doit etre supérieur a 5 caracteres",
+     *      maxMessage = "Le logo doit etre inférieur a 150 caracteres"
+     * )
      */
     private $logoName;
 
@@ -64,6 +93,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToOne(targetEntity=Inventories::class, mappedBy="companyName", cascade={"persist", "remove"})
      */
     private $inventory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="users")
+     */
+    private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Zone::class, inversedBy="users")
+     */
+    private $zone;
 
     public function getId(): ?int
     {
@@ -161,41 +200,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getZone(): ?string
-    {
-        return $this->zone;
-    }
 
-    public function setZone(?string $zone): self
-    {
-        $this->zone = $zone;
 
-        return $this;
-    }
-
-    public function getNumero(): ?string
-    {
-        return $this->numero;
-    }
-
-    public function setNumero(?string $numero): self
-    {
-        $this->numero = $numero;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?string $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getLogoName(): ?string
     {
@@ -222,6 +228,78 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->inventory = $inventory;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMobilePhone()
+    {
+        return $this->mobile_phone;
+    }
+
+    /**
+     * @param mixed $mobile_phone
+     */
+    public function setMobilePhone($mobile_phone): void
+    {
+        $this->mobile_phone = $mobile_phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param mixed $latitude
+     */
+    public function setLatitude($latitude): void
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param mixed $longitude
+     */
+    public function setLongitude($longitude): void
+    {
+        $this->longitude = $longitude;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getZone(): ?Zone
+    {
+        return $this->zone;
+    }
+
+    public function setZone(?Zone $zone): self
+    {
+        $this->zone = $zone;
 
         return $this;
     }

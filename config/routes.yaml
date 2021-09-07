@@ -1,3 +1,15 @@
-index:
+home:
     path: /home
     controller: App\Controller\HomeController::index
+
+user.logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+user.login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+user.create.choice:
+    path: /admin/create/choice
+    controller: App\Controller\SecurityController::createChoice
