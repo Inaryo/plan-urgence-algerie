@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\UserSearch;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -64,4 +66,30 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+    /**
+     * @param UserSearch $search
+     * @return Query
+     */
+    public function findCompaniesBySearch(UserSearch $search): Query
+    {
+
+        $query = $this->createQueryBuilder('e')
+            ->orderBy('e.username','ASC');
+
+        if ($search->getCategory()) {
+
+            $category = $search->getCategory();
+            $query->andWhere('e.category = :category')
+                ->setParameter('category',$category);
+        }
+
+        if ($search->getZone()) {
+            $zone = $search->getZone();
+            $query->andWhere('e.zone = :zone')
+                ->setParameter('zone',$zone);
+        }
+
+        return $query->getQuery();
+
+    }
 }
