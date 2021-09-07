@@ -1,3 +1,19 @@
-#index:
-#    path: /nabil/test
-#    controller: App\Controller\DefaultController::index
+home:
+    path: /home
+    controller: App\Controller\HomeController::index
+
+user.logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
+
+user.login:
+    path: /login
+    controller: App\Controller\SecurityController::login
+
+user.create.choice:
+    path: /admin/create/choice
+    controller: App\Controller\SecurityController::createChoice
+
+user.create.company:
+    path: /admin/create/company
+    controller: App\Controller\SecurityController::createCompany
