@@ -41,7 +41,7 @@ class SecurityController extends  AbstractController
     }
 
     public function createChoice(Request $request) {
-        return $this->render('pages/admin/create_user_choice.html.twig');
+        return $this->render('pages/admin/user/create_user_choice.html.twig');
     }
 
     public function createCompany(Request $request) {
@@ -53,6 +53,7 @@ class SecurityController extends  AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid() ) {
+
             $company->setLatitude(0);
             $company->setLatitude(0);
             $company->setRoles(["ROLE_COMPANY"]);
@@ -62,15 +63,23 @@ class SecurityController extends  AbstractController
             $inventory->setCompanyName($company);
             $inventory->setContent([]);
             $this->em->persist($inventory);
-            $this->em->flush();
+
 
             $company->setInventory($inventory);
 
             $company
                 ->setPassword($this->encoder->encodePassword($company,$company->getPassword()));
 
+            $this->em->persist($company);
+            $this->em->flush();
+            $this->addFlash('success',"Compte Entreprise crée avec succès");
+
+            return $this->redirectToRoute('home');
+
         }
-        return $this->render('pages/admin/create_company.html.twig');
+        return $this->render('pages/admin/user/create_company.html.twig',[
+            'form' => $form->createView()
+        ]);
     }
     public function  logout() {
         throw new \Exception('this should not be reached!');

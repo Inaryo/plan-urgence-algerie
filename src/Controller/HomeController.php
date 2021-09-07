@@ -34,14 +34,14 @@ class HomeController extends  AbstractController
     }
 
 
-    public function index(Request $request,MailerInterface $mailer) {
+    public function index(Request $request) {
 
         $contact = new Contact();
         $form_contact = $this->createForm(ContactType::class,$contact);
 
         if ($form_contact->isSubmitted() && $form_contact->isValid()) {
 
-            $email = new Email();
+            /*$email = new Email();
 
             $render_path = $this->render->render('emails/contact.html.twig',[
                 'contact' => $contact
@@ -60,7 +60,7 @@ class HomeController extends  AbstractController
             } catch (TransportExceptionInterface $e) {
                 $this->addFlash('error',"Erreur lors de l'envoie du mail");
 
-            }
+            }*/
 
         }
 

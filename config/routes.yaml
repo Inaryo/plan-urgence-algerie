@@ -13,3 +13,7 @@ user.login:
 user.create.choice:
     path: /admin/create/choice
     controller: App\Controller\SecurityController::createChoice
+
+user.create.company:
+    path: /admin/create/company
+    controller: App\Controller\SecurityController::createCompany
