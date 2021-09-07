@@ -55,7 +55,7 @@ class SecurityController extends  AbstractController
         if ($form->isSubmitted() && $form->isValid() ) {
 
             $company->setLatitude(0);
-            $company->setLatitude(0);
+            $company->setLongitude(0);
             $company->setRoles(["ROLE_COMPANY"]);
 
 
