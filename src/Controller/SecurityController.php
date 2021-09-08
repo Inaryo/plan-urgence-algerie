@@ -5,9 +5,15 @@ namespace  App\Controller;
 
 
 use App\Entity\Inventories;
+use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\Zone;
+use App\Form\ProductType;
 use App\Form\UserType;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
+use ErrorException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,10 +60,15 @@ class SecurityController extends  AbstractController
 
         if ($form->isSubmitted() && $form->isValid() ) {
 
+            $logoImage = $form->get('logoName')->getData();
+            $logoImage = $this->moveUploadedImages([$logoImage],$company);
+            $company->setLogoName($logoImage[0]) ;
+
+            //TODO GeoLocalisation
             $company->setLatitude(0);
             $company->setLongitude(0);
-            $company->setRoles(["ROLE_COMPANY"]);
 
+            $company->setRoles(["ROLE_COMPANY"]);
 
             $inventory = new Inventories();
             $inventory->setCompanyName($company);
@@ -81,8 +92,72 @@ class SecurityController extends  AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    public function editCompany(User $company,Request $request) {
+
+        $form = $this->createForm(UserType::class,$company,["validation_groups" => "edit"]);
+        $form->handleRequest($request);
+
+        if ( $form->isSubmitted() && $form->isValid()) {
+
+            $logoImage = $form->get('logoName')->getData();
+            if($logoImage) {
+                $logoImage = $this->moveUploadedImages([$logoImage],$company);
+                $company->setLogoName($logoImage[0]) ;
+            }
+            $this->em->flush();
+            $this->addFlash('success',"Produit Edité avec succees");
+            return $this->redirectToRoute('admin.companies.show');
+        }
+
+        return $this->render('pages/admin/user/admin.product.edit.html.twig',[
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function removeCompany(User $company,Request $request) {
+
+        if ($this->isCsrfTokenValid('remove' . $company->getId(),$request->get("_token"))) {
+
+            $this->em->remove($company->getCategory());
+            $this->em->remove($company);
+            $this->em->flush();
+            $this->addFlash('success',"Entreprise Supprimée Avec Succès");
+            return $this->redirectToRoute('admin.home');
+        }
+
+        return $this->redirectToRoute('admin.companies.show');
+    }
+
     public function  logout() {
         throw new \Exception('this should not be reached!');
+    }
+
+    private function moveUploadedImages(Array $array,User $user): array
+    {
+        $slugger = new Slugify();
+        $return_array = [];
+
+        foreach ($array as $imageData) {
+
+            $safeFilename = $slugger->slugify($user->getUsername());
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageData->guessExtension();
+
+
+            try {
+                $imageData->move(
+                    $this->getParameter('users_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw  new ErrorException("Error Uploading file");
+            }
+
+            array_push($return_array,$newFilename);
+            //   }
+        }
+        return $return_array;
+
     }
 
 

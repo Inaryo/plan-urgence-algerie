@@ -17,25 +17,33 @@
                 {% endblock %}
               
             <div class="background">
-                <div class="our_form">
-                    <img src="{{asset('contact_icon.svg','login_page_images')}}" alt="icone de contact" class="contact_icon"/>
-                    <form action="#" method="post">
-                        <div class="username">
-                            <img src="{{asset('username_icon.svg','login_page_images')}}" alt="Icone username">
-                            <input placeholder="Username" type="text" class="input">
-                        </div>
-                        <div class="password">
-                            <img src="{{asset('password_icon.svg','login_page_images')}}" alt="Icone password">
-                            <input placeholder="........" type="password" class="input">
-                        </div>
-                        <a href="#" class="login-button">Login</a>
-                        <div class="check">
-                            <label><input type="checkbox" class="checkbox">Remember me</label>
-                            <a href="#">forgot your password?</a>
-                        </div>
-                    </form>
-                    <img src="{{asset('line.svg','login_page_images')}}" alt="ligne" class="line" />
-                </div>
+            
+
+                <img src="{{asset('contact_icon.svg','login_page_images')}}" alt="icone de contact" class="contact_icon"/>
+                <form   method="post">
+
+                    <div class="username">
+                        <img src="{{asset('username_icon.svg','login_page_images')}}" alt="Icone username">
+                        <input placeholder="Email" value="{{ last_username }}" name="_username" id="username" type="text" class="input">
+                    </div>
+
+                    <div class="password">
+                        <img src="{{asset('password_icon.svg','login_page_images')}}" alt="Icone password">
+                        <input placeholder="........" name="_password" id="inputPassword" type="password" class="input">
+                    </div>
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+
+
+                   <button   type="submit" class="login-button"> Login </button>
+
+                    <div class="check">
+                        <label><input type="checkbox" class="checkbox">Remember me</label>
+                        <a href="#">forgot your password?</a>
+                    </div>
+                </form>
+                <img src="{{asset('line.svg','login_page_images')}}" alt="ligne" class="line" />
+
             </div>
         </section>
 
