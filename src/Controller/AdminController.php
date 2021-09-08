@@ -5,11 +5,9 @@ namespace  App\Controller;
 
 
 use App\Entity\Category;
-use App\Entity\EventSearch;
 use App\Entity\UserSearch;
 use App\Entity\Zone;
 use App\Form\CategoryType;
-use App\Form\EventSearchType;
 use App\Form\UserSearchType;
 use App\Form\ZoneType;
 use App\Repository\UserRepository;
@@ -62,7 +60,7 @@ class AdminController extends  AbstractController
         ]);
     }
 
-    public function addZone(Request $request) {
+    public function createZone(Request $request) {
 
         $zone = new Zone();
         $form = $this->createForm(ZoneType::class,$zone);
@@ -77,7 +75,9 @@ class AdminController extends  AbstractController
             return $this->redirectToRoute('admin.home');
         }
 
-        return $this->render("pages/admin/zone/admin.zone.create.html.twig");
+        return $this->render("pages/admin/zone/admin.zone.create.html.twig",[
+            'form' => $form->createView()
+        ]);
     }
 
 
@@ -152,8 +152,21 @@ class AdminController extends  AbstractController
             return $this->redirectToRoute('admin.home');
         }
 
-        return $this->render("pages/admin/category/admin.category.create.html.twig");
+        return $this->render("pages/admin/category/admin.category.create.html.twig",[
+            "form" => $form->createView()
+        ]);
     }
+
+    public function showCategories(Request $request) {
+
+        return $this->render("pages/admin/category/admin.categories.show.html.twig",[]);
+    }
+
+    public function showZones(Request $request) {
+
+        return $this->render("pages/admin/category/admin.categories.show.html.twig",[]);
+    }
+
 }
 
 
