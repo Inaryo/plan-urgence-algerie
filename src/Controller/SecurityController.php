@@ -146,7 +146,7 @@ class SecurityController extends  AbstractController
 
             try {
                 $imageData->move(
-                    $this->getParameter('products_directory'),
+                    $this->getParameter('users_directory'),
                     $newFilename
                 );
             } catch (FileException $e) {

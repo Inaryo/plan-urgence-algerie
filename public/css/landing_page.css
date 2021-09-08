@@ -1,171 +1,131 @@
-*{
-    font-family: Arial, Helvetica, sans-serif;
+
+.section {
+  margin: 150px 30%;
+  text-align: center;
 }
-body {
+
+.section h2 {
+  color: #06cc69;
+  font-size: 36px;
+  font-weight: 900;
+}
+.about p {
+  line-height: 40px;
+  color: #085830;
+}
+
+.disasters {
+  background-color: #f5f5f5;
+  margin: 150px 0;
+  margin-bottom: 0;
+  padding: 100px 0;
+}
+
+.disaster {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.disaster p {
+  width: 50%;
+  text-align: left;
+  color: #085830;
+  font-size: 20px;
+  font-weight: 600;
+}
+.images {
+  height: 250px;
+  width: 200px;
+  border-color: #06cc69;
+  border-style: solid;
+  border-radius: 15px;
+}
+.contact {
+  background-color: #f5f5f5;
   margin: 0;
-  padding: 0;
-}
-
-header {
-  
-  background-size: cover;
-  height:max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding-bottom: 100px;
-  
+}
+.contact h2 {
+  margin: 0;
+  padding: 50px;
 }
 
-header a{
-    text-decoration: none;
-    color: white
-}
-.navigation_bar ul li{
-    list-style: none
-}
-
-.navigation_bar
-{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 25px;
-}
-.navigation_bar ul{
-    display: flex;
-    margin-right: 75px;
-    width: 400px;
-    justify-content: space-between;
-}
-.navigation_bar ul li{
-    font-size: large;
-    
-}
-.logo{
-    margin-left: 75px;
-    font-size: xx-large;
-    font-weight: 600;
+.form-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 500px;
+  width: 575px;
+  justify-content: space-around;
 }
 
-.slogan{
-    display: flex;
-    margin: 75px 50px;
-    color: white;
-    justify-content: space-around;
+.form-contact label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: #06cc69;
+  font-weight: 900;
+  font-size: 18px;
 }
-.texts{
-    width: 50vw;
-    text-align: center;
+.contact .input {
+  margin: 25px 0;
 }
-.texts h1
-{
-    font-size:56px;
-    font-weight: 900;
-    
+.form-contact div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
 }
-.texts p{
-    line-height: 40px;
-    font-weight: 600;
+.subject,
+.text-area,
+.message {
+  width: 100%;
 }
-.slogan img{
-   width: 500px;
-   height: auto;
+.text-area {
+  height: 200px;
+  resize: none;
 }
-
-
-.section{
-    margin: 150px 30%;
-    text-align: center;
+.text-area::-webkit-scrollbar {
+  width: 13px;
+  height: 13px;
 }
-
-.section h2{
-    color: #06CC69;
-    font-size: 36px;
-    font-weight: 900;
+::-webkit-scrollbar-thumb {
+  background: #06cc69;
+  border-radius: 10px;
 }
-.about p{
-    line-height: 40px;
-    color: #085830;
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff80;
 }
-
-.disasters{
-    background-color: #F5F5F5;
-    margin: 150px 0;
-    margin-bottom: 0;
-    padding: 100px 0;
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: inset 7px 10px 12px 0px #f0f0f0;
 }
 
-.disaster{
-
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-
+.send-message-button {
+  background-color: #06cc69;
+  border: none;
+  outline: none;
+  padding: 25px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 50px;
+  margin-top: 25px;
+  box-shadow: 19px 10px 50px -25px #06cc69;
 }
-
-.disaster p{
-    width: 50%;
-    text-align: left;
-    color: #085830;
-    font-size: 20px;
-    font-weight: 600;
-}
-.images{
-    height:250px;
-    width: 200px;
-    border-color: #06CC69;
-    border-style: solid;
-    border-radius: 15px;
-}
-
-.newsletter{
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    background-color: #06CC69;
-    padding: 50px 0;
-    align-items: center;
-
-}
-.newsletter p{
-    font-weight: 900;
-    font-size: 48px;
-    width: 400px;
-    color: white;
-    text-align: left;
-}
-
-.newsletter form{
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-    align-items: center;
-}
-.email{
-    height: 40px;
-    width: 270px;
-}
-
-.newsletter form input::placeholder{
-    color: #676767;
-}
-
-.newsletter-button{
-    background-color: rgba(255, 255, 255, 0);
-    border-color: white;
-    color: white;
-    font-size: 18px;
-    font-weight: 600;
-    padding: 15px 30px;
-    border-color: white;
-    border-style: solid;
-    border-width: 3px;
-    margin-top: 30px;
-    width: max-content;
-
+.send-message-button:hover {
+  color: rgba(218, 218, 218, 0.767);
+  cursor: pointer;
 }
 
 
-@media screen and (max-width:1000px){
-    .slogan img{
-        display: none;
-    }
+@media screen and (max-width: 1100px) {
+  .slogan img {
+    display: none;
+  }
 }

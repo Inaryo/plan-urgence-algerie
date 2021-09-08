@@ -4,9 +4,11 @@
 namespace App\Security;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
@@ -32,14 +34,21 @@ class UsernameAuthenticator extends AbstractAuthenticator
      * @var TranslatorInterface
      */
     private $translator;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
     private $csrfTokenManager;
     /**
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
 
-    public function __construct(TranslatorInterface $translator,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator)
+    public function __construct(RouterInterface $router,TranslatorInterface $translator,CsrfTokenManagerInterface $csrfTokenManager,UrlGeneratorInterface $urlGenerator)
     {
+        $this->router = $router;
         $this->translator = $translator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->urlGenerator = $urlGenerator;
@@ -96,7 +105,7 @@ class UsernameAuthenticator extends AbstractAuthenticator
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
         {
         // on success, let the request continue
-        return null;
+            return new RedirectResponse($this->router->generate('home'));
         }
 
         public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
