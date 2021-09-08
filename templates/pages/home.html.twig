@@ -12,12 +12,21 @@
 	<header style="background-image: url({{asset('background.png','landing_page_images')}});">
 		<nav class="navigation_bar">
 			<div class="logo">
-				<a href='{{ path('home') }}' alt="Logo Path">LOGO HERE</a>
+				<a href='{{ path('home') }}'  >LOGO HERE</a>
 			</div>
 			<ul>
-				<li><a href='{{ path('user.login') }}' alt="Sign In">Sign in</a></li>
-				<li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
 				<li><a href='{{ path('home') }}#about' alt="About Us">About Us</a></li>
+				{% if app.user %}
+					<li><a href='{{ path('user.logout') }}' alt="Logout">Logout</a></li>
+					<li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
+				{% else  %}
+					<li><a href='{{ path('user.login') }}' alt="Sign In">Sign in</a></li>
+					<li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
+				{% endif %}
+
+				{% if is_granted('ROLE_MODERATOR') %} <li><a href='{{ path('admin.home') }}' alt="Admin Panel">Admin</a></li> {% endif %}
+
+
 			</ul>
 
 
