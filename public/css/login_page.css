@@ -1,5 +1,5 @@
-* {
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  overflow: hidden;
 }
 .login_page {
   background-size: cover;
@@ -7,17 +7,21 @@
 }
 .background {
   background-color: #06cc69da;
-  height: 88vh;
+  height: 100vh;
+  position: relative;
+}
+.navigation_bar {
+  background: #06cc69da;
+}
+
+.our_form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 12vh;
+  padding-top: 40px;
 }
 body {
   margin: 0;
-}
-.background div {
-  margin: 25px 0;
 }
 
 .background form {
@@ -34,19 +38,23 @@ body {
   color: white;
   font-size: 18px;
 }
-.check a{
-    text-decoration: none;
-    color: white;
-    font-size: 14px;
-    font-family: cursive;
+.check a {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+  font-family: cursive;
 }
-.check a:hover{
-   color: rgba(255, 255, 255, 0.719);
+.check a:hover {
+  color: rgba(255, 255, 255, 0.719);
 }
-.check label{display: flex; align-items: center;}
-.background form div {
+.check label {
   display: flex;
   align-items: center;
+}
+form div {
+  display: flex;
+  align-items: center;
+  margin: 25px 0;
 }
 .username img,
 .password img {
@@ -77,38 +85,35 @@ body {
 .input:focus {
   outline: none;
 }
-.login-button{
-    text-decoration: none;
-    color: #06cc69da;
-    background-color: white;
-    width: 100%;
-    text-align: center;
-    font-weight: 700;
-    font-size: 26px;
-    padding: 15px 0;
-    margin: 15px 0;
-}   
-
-.login-button:hover{
-    color:#06ff82;
+.login-button {
+  text-decoration: none;
+  color: #06cc69da;
+  background-color: white;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 26px;
+  padding: 15px 0;
+  margin: 15px 0;
 }
 
-input[type="checkbox"]{
-    height: 35px;
-    width: 35px;
-    background-color: none;
-    border-color: white;
-    border-width: 3px;
-    border-style: solid;
+.login-button:hover {
+  color: #06ff82;
 }
 
-input[type="checkbox"]:hover{
-    cursor: pointer;
-    border-color: rgba(255, 255, 255, 0.719);
-    
+input[type="checkbox"] {
+  height: 35px;
+  width: 35px;
+  background-color: none;
+  border-color: white;
+  border-width: 3px;
+  border-style: solid;
 }
-input[type="checkbox"]::after{
-    background-color: red;
 
+input[type="checkbox"]:hover {
+  cursor: pointer;
+  border-color: rgba(255, 255, 255, 0.719);
 }
-
+input[type="checkbox"]::after {
+  background-color: red;
+}

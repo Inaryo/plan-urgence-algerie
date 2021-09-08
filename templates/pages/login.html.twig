@@ -1,16 +1,24 @@
-{% extends 'base.html.twig' %}
+{% extends 'pages/home.html.twig'%}
 
 {% block title %}Sign in{% endblock %}
 
     {% block stylesheets %}
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+        <link href="{{asset('nav_bar.css','css')}}" rel="stylesheet"/> 
         <link href="{{asset('login_page.css','css')}}" rel="stylesheet"/>
-        
+             
     {% endblock %}
 
+    
 	{% block body %}
+        
         <section class="login_page" style="background-image: url({{asset('login_background.jpg','login_page_images')}});">
+                {% block nav %}
+                    {{ parent() }}
+                {% endblock %}
+              
             <div class="background">
+            
+
                 <img src="{{asset('contact_icon.svg','login_page_images')}}" alt="icone de contact" class="contact_icon"/>
                 <form   method="post">
 
@@ -35,6 +43,7 @@
                     </div>
                 </form>
                 <img src="{{asset('line.svg','login_page_images')}}" alt="ligne" class="line" />
+
             </div>
         </section>
 
