@@ -5,11 +5,22 @@
 {% endblock %}
 
 {% block stylesheets %}
+	<link href="{{asset('header.css','css') }}" rel="stylesheet"/>
+	<link href="{{asset('nav_bar.css','css') }}" rel="stylesheet"/>
+	<link href="{{asset('newsletter.css','css') }}" rel="stylesheet"/>
 	<link href="{{asset('landing_page.css','css') }}" rel="stylesheet"/>
+	<link href="{{asset('footer.css','css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-	<header style="background-image: url({{asset('background.png','landing_page_images')}});">
+
+	{% block header %}
+		{% block header_background %}
+		<header style="background-image: url({{asset('background.png','landing_page_images')}});">
+		{% endblock %}
+		
+			
+	{% block nav %}
 		<nav class="navigation_bar">
 			<div class="logo">
 				<a href='{{ path('home') }}'  >LOGO HERE</a>
@@ -25,23 +36,28 @@
 				{% endif %}
 
 				{% if is_granted('ROLE_MODERATOR') %} <li><a href='{{ path('admin.home') }}' alt="Admin Panel">Admin</a></li> {% endif %}
-
-
 			</ul>
-
-
-		</nav>
-
-		<div class="slogan">
-			<div class="texts">
-				<h1>Lorem Ipsum</h1>
-				<p>
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-				</p>
+      
+			</nav>
+			{% endblock %}
+			{% block slogan %}<div class="slogan">{% endblock %}
+				{% block texts %}
+				<div class="texts">
+					<h1>Lorem Ipsum</h1>
+					<p>
+						Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+					</p>
+				</div>
+				{% endblock %}
+				{% block image_header %}
+				<img src="{{ asset('header_image.png','landing_page_images')}}" alt="Image pour le header">
+				{% endblock %}
+									
 			</div>
-			<img src="{{ asset('header_image.png','landing_page_images')}}" alt="Image pour le header">
-		</div>
-	</header>
+		</header>
+	{% endblock %}	
+	
+	
 
 	<section class="section about" id="about">
 		<h2>About Us</h2>
@@ -59,6 +75,7 @@
 
 	</div>
 </section>
+{% block newsletter %}
 <section class="newsletter">
 	<p>Join our newsletter to stay updated</p>
 	<form action="" method="post">
@@ -66,6 +83,8 @@
 		<input class="newsletter-button" href="#" type="submit" value="Join Newsletter">
 	</form>
 </section>
+{% endblock %}
+
 
 <section class="contact section">
 	<h2 class="title">Contact Us</h2>
@@ -82,30 +101,31 @@
 		<input type="submit" value="Send Message" class="send-message-button">
 	</form>
 </section>
-
-<footer>
-	<div class="info-div">
-		<div class="logo">
-			<a href='{{ path('home') }}' alt="Logo Path">LOGO HERE</a>
-		</div>
-		<div class="informations">
-			<p>informations</p>
-			<p></p>
-			<p>informations</p>
-			<p></p>
-			<p>informations</p>
-			<p></p>
-			<p>informations</p>
-			<p></p>
-		</div>
-	</div>
-	<div class="social-media">
-		<p>Stay connected with</p>
-		<a href="#"><img src="{{asset('facebook.svg','landing_page_images') }}" alt="icone de facebook "></a>
-		<a href="#"><img src="{{asset('twitter.svg','landing_page_images') }}" alt="icone de twitter "></a>
-		<a href="#"><img src="{{asset('instagram.svg','landing_page_images') }}" alt="icone d'instagram"></a>
-		<a href="#"><img src="{{asset('linkdin.svg','landing_page_images') }}" alt="icone de linkdin "></a>
-		<a href="#"><img src="{{asset('youtube.svg','landing_page_images') }}" alt="icone de youtube "></a>
-	</div>
-
-</footer>{% endblock %}
+	{% block footer %}
+		<footer>
+			<div class="info-div">
+				<div class="logo">
+				<a href='{{ path('home') }}' alt="Logo Path">LOGO HERE</a>
+			</div>
+			<div class="informations">
+				<p>informations</p>
+				<p></p>
+				<p>informations</p>
+				<p></p>
+				<p>informations</p>
+				<p></p>
+				<p>informations</p>
+				<p></p>
+			</div>
+			</div>
+			<div class="social-media">
+				<p>Stay connected with</p>
+				<a href="#"><img src="{{asset('facebook.svg','landing_page_images') }}" alt="icone de facebook "></a>
+				<a href="#"><img src="{{asset('twitter.svg','landing_page_images') }}" alt="icone de twitter "></a>
+				<a href="#"><img src="{{asset('instagram.svg','landing_page_images') }}" alt="icone d'instagram"></a>
+				<a href="#"><img src="{{asset('linkdin.svg','landing_page_images') }}" alt="icone de linkdin "></a>
+				<a href="#"><img src="{{asset('youtube.svg','landing_page_images') }}" alt="icone de youtube "></a>
+			</div>
+		</footer>	
+{% endblock %}
+{% endblock %}

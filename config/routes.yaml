@@ -10,7 +10,7 @@ user.login:
     path: /login
     controller: App\Controller\SecurityController::login
 
-adminuser.create.choice:
+admin.user.create.choice:
     path: /admin/create/choice
     controller: App\Controller\SecurityController::createChoice
 
@@ -22,13 +22,29 @@ admin.create.company:
     path: /admin/create/company
     controller: App\Controller\SecurityController::createCompany
 
+
+
 admin.zone.create:
     path: /admin/zone/create
     controller: App\Controller\AdminController::createZone
 
 admin.category.create:
     path: /admin/category/create
-    controller: App\Controller\AdminController::createCategory
+    controller: App\Controller\AdminController::addCategory
+
+admin.create.donator:
+    path: /admin/create/donator
+    controller: App\Controller\SecurityController::createCompany
+
+
+admin.zones.show:
+    path: /admin/zons/show
+    controller: App\Controller\AdminController::showZones
+
+
+admin.categories.show:
+    path: /admin/categories/show
+    controller: App\Controller\AdminController::showCategories
 
 
 admin.zone.edit:
