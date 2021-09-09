@@ -20,7 +20,7 @@
             
 
                 <img src="{{asset('contact_icon.svg','login_page_images')}}" alt="icone de contact" class="contact_icon"/>
-                <form   method="post">
+                <form method="post">
 
                     <div class="username">
                         <img src="{{asset('username_icon.svg','login_page_images')}}" alt="Icone username">
@@ -33,8 +33,6 @@
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
-
-
                    <button   type="submit" class="login-button"> Login </button>
 
                     <div class="check">

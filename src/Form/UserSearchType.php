@@ -3,13 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\Event;
-use App\Entity\EventSearch;
-use App\Entity\Product;
 use App\Entity\User;
+use App\Entity\UserSearch;
 use App\Entity\Zone;
 use App\Repository\CategoryRepository;
-use App\Repository\ProductRepository;
 use App\Repository\UserRepository;
 use App\Repository\ZoneRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -51,7 +48,7 @@ class UserSearchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => EventSearch::class,
+            'data_class' => UserSearch::class,
             'translation_domain' => 'forms',
             'method' => 'get',
             'csrf_protection' => false
