@@ -133,10 +133,10 @@ class AdminController extends  AbstractController
         $form_search->handleRequest($request);
 
         $page = $request->get('page',1);
-        $events = $paginator->paginate($this->userRepository->findCompaniesBySearch($search),$page,10);
+        $companies = $paginator->paginate($this->userRepository->findCompaniesBySearch($search),$page,10);
 
         return $this->render("pages/admin/admin.companies.show.html.twig",[
-            'events' => $events,
+            'companies' => $companies,
             'search_form' => $form_search->createView()
         ]);
     }
@@ -256,6 +256,11 @@ class AdminController extends  AbstractController
         return $this->render("pages/admin/category/admin.category.create.html.twig",[
             "form" => $form->createView()
         ]);
+    }
+
+
+    public function editCompany(User $company) {
+        //TODO EDITCOMPANY
     }
 
     public function showCategories(Request $request,PaginatorInterface $paginator) {

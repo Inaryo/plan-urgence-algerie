@@ -104,6 +104,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $zone;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -300,6 +305,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setZone(?Zone $zone): self
     {
         $this->zone = $zone;
+
+        return $this;
+    }
+
+    public function getActivated(): ?bool
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): self
+    {
+        $this->activated = $activated;
 
         return $this;
     }

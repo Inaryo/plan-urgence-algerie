@@ -136,7 +136,7 @@ class SecurityController extends  AbstractController
             //TODO GeoLocalisation
             $company->setLatitude(0);
             $company->setLongitude(0);
-
+            $company->setActivated(false);
             $company->setRoles(["ROLE_COMPANY"]);
 
             $inventory = new Inventories();
