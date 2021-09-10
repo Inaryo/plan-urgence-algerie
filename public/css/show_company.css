@@ -1,0 +1,137 @@
+.show_company h1 {
+    color: white;
+    font-size: 40px;
+    margin: 0;
+    padding-top: 30px;
+    text-transform: uppercase;
+
+}
+
+.show_company {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: max-content;
+}
+
+.navigation_bar {
+    width: 100%;
+}
+
+.line {
+    background-color: white;
+    border: 2px white solid;
+    border-radius: 15px;
+    width: 200px;
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+
+}
+
+.filter-button {
+    border: none;
+    color: #06CC69;
+    background-color: white;
+    padding: 7px 18px;
+    font-size: 22px;
+    font-weight: 900;
+    border-radius: 5px;
+}
+
+.filter-button:hover {
+    background-color: rgba(255, 255, 255, 0.86);
+    cursor: pointer;
+}
+
+.add {
+    border: none;
+    color: white;
+    background-color: #085830;
+    padding: 5px 25px;
+    font-size: 22px;
+    font-weight: 900;
+    border-radius: 5px;
+
+}
+
+.add:hover {
+    background-color: rgba(8, 88, 48, 0.82);
+    cursor: pointer;
+}
+
+.button-div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+table {
+    background-color: rgba(255, 255, 255, 0.829);
+    margin-top: 25px;
+    width: 100%;
+
+}
+
+select {
+    background-color: #085830;
+    color: white;
+    font-size: 22px;
+    font-weight: 900;
+    padding: 10px 40px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+select:focus {
+    outline: none;
+
+}
+
+select option {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/*
+input[type="checkbox"]{
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: #085830 2px solid;
+
+}
+*/
+input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+thead tr td {
+    justify-self: flex-start;
+}
+
+thead tr {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+thead tr th {
+    width: max-content;
+}

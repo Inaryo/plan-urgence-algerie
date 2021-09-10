@@ -1,8 +1,39 @@
-{% extends 'base.html.twig' %}
+
+{% extends 'pages/home.html.twig' %}
+{% block title %}Add Company{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('nav_bar.css','css') }}" rel="stylesheet"/>
+    <link href="{{ asset('adding_company.css','css') }}" rel="stylesheet"/>
+    <style>
+        body {
+            background-image: url("{{asset('background_company.png','adding_company_images')}}");
+            background-size: cover;
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
 
-    <button>Confirmer</button>
-    {{ form_end(form) }}
+    <section class="adding_business">
+        {% block  nav %}{{ parent() }}{% endblock %}
+
+        <h1>Adding Business</h1>
+        <div class="line"></div>
+        <form action="" class="business-form">
+            <label
+            ><span class="text-label">Name</span> <input type="text"
+                /></label>
+            <label
+            ><span class="text-label">PhoneNumber</span> <input type="text"
+                /></label>
+            <label
+            ><span class="text-label">E-mail</span> <input type="email"
+                /></label>
+            <label
+            ><span class="text-label">Location</span><input type="text"
+                /></label>
+        </form>
+        <a href="#" class="add-button">Add</a>
+    </section>
+
 {% endblock %}

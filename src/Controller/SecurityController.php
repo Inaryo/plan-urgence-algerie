@@ -116,7 +116,7 @@ class SecurityController extends  AbstractController
     }
 
     public function createChoice(Request $request) {
-        return $this->render('pages/admin/user/create_user_choice.html.twig');
+        return $this->render('pages/create_user_choice.html.twig');
     }
 
     public function createCompany(Request $request) {
@@ -157,7 +157,7 @@ class SecurityController extends  AbstractController
             return $this->redirectToRoute('home');
 
         }
-        return $this->render('pages/admin/user/create_company.html.twig',[
+        return $this->render('pages/create_company.html.twig',[
             'form' => $form->createView()
         ]);
     }

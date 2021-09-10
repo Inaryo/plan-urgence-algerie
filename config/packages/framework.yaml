@@ -28,7 +28,11 @@ framework:
             login_page_images:
                 base_path: 'images/login_page'  
             admin_page_images:
-                base_path: 'images/admin'                        
+                base_path: 'images/admin'
+            adding_company_images:
+                base_path: 'images/adding_company'
+            show_company_images:
+                base_path: 'images/show_company'
 when@test:
     framework:
         test: true
