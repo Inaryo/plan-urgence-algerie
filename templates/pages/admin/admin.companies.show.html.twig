@@ -36,46 +36,27 @@
             <table>
                 <thead>
                 <tr>
-                    <td><input type="checkbox"></td>
                     <th>Name</th>
-                    <th>Location</th>
+                    <th>Zone</th>
+                    <th>Category</th>
                     <th>Email</th>
                     <th>Phone Number</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
 
                 <tbody>
+                {% for company in companies %}
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <th></th><!--Name value-->
-                    <th></th><!--Location value-->
-                    <th></th><!--Email value-->
-                    <th></th><!--Phone number value-->
-                </tr>
 
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <th></th><!--Name value-->
-                    <th></th><!--Location value-->
-                    <th></th><!--Email value-->
-                    <th></th><!--Phone number value-->
+                    <th>{{ company.username }}</th><!--Name value-->
+                    <th>{{ company.zone.name }}</th><!--Zone value-->
+                    <th>{{ company.category.name }}</th><!--Category value-->
+                    <th>{{ company.email }}</th><!--Email value-->
+                    <th>0{{ company.mobilephone }}</th><!--Phone number value-->
+                    <th><a href="{{ path() }}"></a></th>
                 </tr>
-
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <th></th><!--Name value-->
-                    <th></th><!--Location value-->
-                    <th></th><!--Email value-->
-                    <th></th><!--Phone number value-->
-                </tr>
-
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <th></th><!--Name value-->
-                    <th></th><!--Location value-->
-                    <th></th><!--Email value-->
-                    <th></th><!--Phone number value-->
-                </tr>
+                {% endfor %}
 
 
 

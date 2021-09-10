@@ -104,7 +104,9 @@ admin.item.remove:
     requirements:
         id : '\d+'
 
-
+admin.company.edit:
+    path: /admin/company/{id}/edit
+    controller: App\Controller\AdminController::editCompany
 
 admin.companies.show:
     path: /admin/companies
