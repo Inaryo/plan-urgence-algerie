@@ -5,12 +5,18 @@ namespace  App\Controller;
 
 
 use App\Entity\Category;
+use App\Entity\Item;
 use App\Entity\UserSearch;
 use App\Entity\Zone;
 use App\Form\CategoryType;
+use App\Form\ItemType;
 use App\Form\UserSearchType;
 use App\Form\ZoneType;
+use App\Repository\CategoryRepository;
+use App\Repository\ItemRepository;
 use App\Repository\UserRepository;
+use App\Repository\ZoneRepository;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +32,11 @@ class AdminController extends  AbstractController
      */
     private $render;
 
+    private $itemsRepository;
 
+    private $zonesRepository;
+
+    private $categoriesRepository;
 
     private $userRepository;
     /**
@@ -34,8 +44,11 @@ class AdminController extends  AbstractController
      */
     private $em;
 
-    public function __construct(EntityManagerInterface $em,UserRepository $userRepository,Environment $render)
+    public function __construct(EntityManagerInterface $em,UserRepository $userRepository,Environment $render,ZoneRepository $zonesRepository,CategoryRepository $categoriesRepository,ItemRepository $itemsRepository)
     {
+        $this->itemsRepository = $itemsRepository;
+        $this->categoriesRepository = $categoriesRepository;
+        $this->zonesRepository = $zonesRepository;
         $this->em = $em;
         $this->userRepository = $userRepository;
         $this->render = $render;
@@ -44,6 +57,74 @@ class AdminController extends  AbstractController
     public function index() {
         return $this->render("pages/admin/admin.home.html.twig");
     }
+
+
+    public function addItem(Request $request) {
+        $item = new Item();
+        $form = $this->createForm(ItemType::class,$item);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slug = new Slugify();
+            $item->setName($slug->slugify($item->getName()));
+            $this->em->persist($item);
+            $this->em->flush();
+
+            $this->addFlash('success',"Item crée avec succès");
+            return $this->redirectToRoute('admin.items.show');
+
+        }
+
+        return $this->render("pages/admin/item/admin.create.item.html.twig",[
+            "form" => $form->createView()
+        ]);
+    }
+
+    public function removeItem(Item $item,Request $request) {
+
+        if ($this->isCsrfTokenValid('remove' . $item->getId(),$request->get("_token"))) {
+
+            $this->em->remove($item);
+            $this->em->flush();
+            $this->addFlash('success',"Item Supprimée Avec Succès");
+            return $this->redirectToRoute('admin.home');
+        }
+
+        return $this->redirectToRoute('admin.home');
+    }
+
+    public function editItem(Item $item,Request $request) {
+
+        $form = $this->createForm(ItemType::class,$item);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $slug = new Slugify();
+            $item->setName($slug->slugify($item->getName()));
+            $this->em->flush();
+
+            $this->addFlash('success',"Item edite avec succès");
+            return $this->redirectToRoute('admin.home');
+        }
+
+        return $this->render("pages/admin/item/admin.edit.item.html.twig");
+
+    }
+
+    public function  showItems(Request  $request,PaginatorInterface $paginator) {
+
+
+        $page = $request->get('page',1);
+        $items = $paginator->paginate($this->itemsRepository->findAll(),$page,10);
+
+        return $this->render("pages/admin/item/admin.list.items.html.twig",[
+            'items' => $items
+        ]);
+    }
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     public function showCompanies(Request $request,PaginatorInterface $paginator) {
 
@@ -59,6 +140,10 @@ class AdminController extends  AbstractController
             'search_form' => $form_search->createView()
         ]);
     }
+
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////
 
     public function createZone(Request $request) {
 
@@ -80,7 +165,6 @@ class AdminController extends  AbstractController
         ]);
     }
 
-
     public function editZone(Zone $zone,Request $request) {
 
         $form = $this->createForm(ZoneType::class,$zone);
@@ -96,6 +180,16 @@ class AdminController extends  AbstractController
         return $this->render("pages/admin/zone/admin.zone.edit.html.twig");
     }
 
+    public function showZones(Request $request,PaginatorInterface $paginator) {
+
+        $page = $request->get('page',1);
+        $zones = $paginator->paginate($this->zonesRepository->findAll(),$page,10);
+
+        return $this->render("pages/admin/zone/admin.zones.show.html.twig",[
+            'zones' => $zones
+        ]);
+    }
+
     public function removeZone(Zone $zone,Request $request) {
 
             if ($this->isCsrfTokenValid('remove' . $zone->getId(),$request->get("_token"))) {
@@ -108,6 +202,13 @@ class AdminController extends  AbstractController
 
             return $this->redirectToRoute('admin.home');
         }
+
+
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+
 
     public function removeCategory(Category $category,Request $request) {
 
@@ -134,7 +235,7 @@ class AdminController extends  AbstractController
             return $this->redirectToRoute('admin.home');
         }
 
-        return $this->render("pages/admin/zone/admin.zone.edit.html.twig");
+        return $this->render("pages/admin/category/admin.category.edit.html.twig");
     }
 
     public function addCategory(Request $request) {
@@ -157,15 +258,17 @@ class AdminController extends  AbstractController
         ]);
     }
 
-    public function showCategories(Request $request) {
+    public function showCategories(Request $request,PaginatorInterface $paginator) {
 
-        return $this->render("pages/admin/category/admin.categories.show.html.twig",[]);
+        $page = $request->get('page',1);
+        $categories = $paginator->paginate($this->categoriesRepository->findAll(),$page,10);
+
+        return $this->render("pages/admin/category/admin.categories.show.html.twig",[
+            'categories' => $categories
+        ]);
     }
 
-    public function showZones(Request $request) {
 
-        return $this->render("pages/admin/category/admin.categories.show.html.twig",[]);
-    }
 
 }
 

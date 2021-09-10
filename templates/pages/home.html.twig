@@ -30,16 +30,16 @@
 
 				{% if app.user %}
 					<li><a href='{{ path('user.logout') }}' alt="Logout">Logout</a></li>
-					<li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
+					<li><a href='{{ path('user.profile') }}' alt="Home page">Profile</a></li>
 				{% else  %}
 					<li><a href='{{ path('user.create.choice') }}#' alt="Register">Register</a></li>
 					<li><a href='{{ path('user.login') }}' alt="Sign In">Sign in</a></li>
-					<li><a href='{{ path('home') }}' alt="Home page">Profile</a></li>
+					<li><a href='{{ path('user.profile') }}' alt="Home page">Profile</a></li>
 				{% endif %}
 
 				{% if is_granted('ROLE_MODERATOR') %} <li><a href='{{ path('admin.home') }}' alt="Admin Panel">Admin</a></li> {% endif %}
 			</ul>
-      
+
 			</nav>
 			{% endblock %}
 			{% block slogan %}<div class="slogan">{% endblock %}

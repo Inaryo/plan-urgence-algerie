@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Entity\Zone;
 use App\Form\ProductType;
 use App\Form\UserType;
+use App\Repository\ItemRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Twig\Environment;
@@ -28,12 +30,79 @@ class SecurityController extends  AbstractController
 
     private $encoder;
     private $em;
+    /**
+     * @var Security
+     */
+    private $security;
+    /**
+     * @var ItemRepository
+     */
+    private $itemRepository;
 
-    public function __construct(Environment $render,UserPasswordEncoderInterface $encoder,EntityManagerInterface $em)
+    public function __construct(ItemRepository $itemRepository,Security $security,Environment $render,UserPasswordEncoderInterface $encoder,EntityManagerInterface $em)
     {
         $this->encoder = $encoder;
         $this->em = $em;
+        $this->security = $security;
+        $this->itemRepository = $itemRepository;
     }
+
+
+
+    public function profile(Request $request) {
+        $user = $this->getUser();
+
+        if ($user != null) {
+            $items = $this->itemRepository->findAll();
+            $inventory = $user->getInventory();
+
+            if ($request->isMethod('POST')) {
+
+                $array = [];
+                foreach ($items as $item) {
+                    $value = $request->get($item->getName());
+                    if ($value < 0) {$value = 0;}
+                    $array[$item->getId()] = $value;
+                }
+
+                $inventory->setContent($array);
+                $this->em->flush();
+                $this->addFlash('success',"Inventaire Entreprise edité avec succès");
+
+                return $this->redirectToRoute('home');
+
+            } else {
+
+                $items_array = [];
+
+                foreach ($items as $item) {
+                    $items_array[$item->getName()] = 0;
+                }
+
+
+                $json = $inventory->getContent();
+                $inventory = $json;
+
+                foreach ($inventory as $key => $value) {
+                    $item = $this->itemRepository->find($key);
+                    if ($item != null) {
+                        $items_array[$item->getName()] = $value;
+                    }
+
+                }
+
+                return $this->render("pages/profile.html.twig",[
+                    "items" => $items_array
+                ]);
+            }
+
+
+        }
+
+        return $this->redirectToRoute('user.login');
+    }
+
+
 
 
     public function login(AuthenticationUtils $authenticationUtils): Response

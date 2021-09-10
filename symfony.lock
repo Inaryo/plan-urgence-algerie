@@ -115,6 +115,9 @@
     "phar-io/version": {
         "version": "3.1.0"
     },
+    "php": {
+        "version": "7.4"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -170,6 +173,9 @@
     },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "scienta/doctrine-json-functions": {
+        "version": "4.3.0"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"

@@ -28,6 +28,8 @@ class Inventories
      */
     private $content = [];
 
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -56,4 +58,6 @@ class Inventories
 
         return $this;
     }
+
+
 }
