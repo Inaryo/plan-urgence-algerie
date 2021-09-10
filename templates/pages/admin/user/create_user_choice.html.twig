@@ -12,8 +12,9 @@
 
 {% block body %}
 
-    <link href="{{asset('nav_bar.css','css') }}" rel="stylesheet"/>
-    </header>
+    {% block nav %}
+        {{ parent() }}
+    {% endblock %}
 
     <section class="admin">
         <div class="admin-item">

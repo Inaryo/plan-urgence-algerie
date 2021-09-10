@@ -1,0 +1,87 @@
+{% extends '/pages/home.html.twig' %}
+    {% block title %}View Companies{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('nav_bar.css','css') }}" rel="stylesheet"/>
+    <link href="{{ asset('show_company.css','css') }}" rel="stylesheet"/>
+    <style>
+        body {
+            background-image: url("{{ asset('show_company.jpg','show_company_images') }}");
+            background-size: cover;
+        }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <section class="show_company">
+        {% block nav %}{{ parent() }}{% endblock %}
+        <h1>Companies</h1>
+        <div class="line"></div>
+        <div class="wrapper">
+            <div class="button-div">
+                <select name="Filtre">
+
+                    <option value="Wilaya">Wilaya</option>
+                    <option value="Name">Name</option>
+                    <!-- Ajoutez autant d'option que nésessaire-->
+                </select>
+                <button class="filter-button">Category</button>
+                <div class="buttons">
+                    <button class="filter-button">Filter</button>
+                    <button class="add">Add</button>
+                </div>
+
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th></th><!--Name value-->
+                    <th></th><!--Location value-->
+                    <th></th><!--Email value-->
+                    <th></th><!--Phone number value-->
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th></th><!--Name value-->
+                    <th></th><!--Location value-->
+                    <th></th><!--Email value-->
+                    <th></th><!--Phone number value-->
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th></th><!--Name value-->
+                    <th></th><!--Location value-->
+                    <th></th><!--Email value-->
+                    <th></th><!--Phone number value-->
+                </tr>
+
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <th></th><!--Name value-->
+                    <th></th><!--Location value-->
+                    <th></th><!--Email value-->
+                    <th></th><!--Phone number value-->
+                </tr>
+
+
+
+                </tbody>
+            </table>
+        </div>
+
+    </section>
+{% endblock %}

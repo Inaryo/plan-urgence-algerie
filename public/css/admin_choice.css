@@ -34,3 +34,9 @@
 section.newsletter {
   border-bottom: white 1px solid;
 }
+
+.navigation_bar{
+  background-color: #06cc69;
+  padding: 25px 0;
+
+}

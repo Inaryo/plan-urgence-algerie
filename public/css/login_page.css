@@ -1,119 +1,122 @@
-html {
-  overflow: hidden;
+body {
+    margin: 0;
 }
 .login_page {
-  background-size: cover;
-  height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-bottom: 10vh;
 }
-.background {
-  background-color: #06cc69da;
-  height: 100vh;
-  position: relative;
-}
+
 .navigation_bar {
-  background: #06cc69da;
+    width: 100%;
+    margin-bottom: 100px;
 }
 
 .our_form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 40px;
-}
-body {
-  margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.background form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: max-content;
-  padding: 50px;
-}
 .check {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  color: white;
-  font-size: 18px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    color: white;
+    font-size: 18px;
 }
+
 .check a {
-  text-decoration: none;
-  color: white;
-  font-size: 14px;
-  font-family: cursive;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    font-family: cursive;
 }
+
 .check a:hover {
-  color: rgba(255, 255, 255, 0.719);
+    color: rgba(255, 255, 255, 0.719);
 }
+
 .check label {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
+
 form div {
-  display: flex;
-  align-items: center;
-  margin: 25px 0;
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
 }
+
 .username img,
 .password img {
-  outline: 4px solid white;
-  height: 39px;
-  padding: 5px 7px;
-  -moz-outline-radius: 5px;
+    outline: 4px solid white;
+    height: 39px;
+    padding: 5px 7px;
+    -moz-outline-radius: 5px;
 }
+
 .password img {
-  padding: 5px 10px;
+    padding: 5px 10px;
 }
+
 .username input::placeholder,
 .password input::placeholder {
-  text-transform: uppercase;
-  color: #06cc69da;
-  font-size: 18px;
-  font-weight: 600;
+    text-transform: uppercase;
+    color: #06cc69da;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .input {
-  height: 55px;
-  border: 0;
-  width: 300px;
-  padding-left: 25px;
-  font-size: 18px;
-  font-weight: 600;
+    height: 55px;
+    border: 0;
+    width: 300px;
+    padding-left: 25px;
+    font-size: 18px;
+    font-weight: 600;
 }
+
 .input:focus {
-  outline: none;
+    outline: none;
 }
+
 .login-button {
-  text-decoration: none;
-  color: #06cc69da;
-  background-color: white;
-  width: 100%;
-  text-align: center;
-  font-weight: 700;
-  font-size: 26px;
-  padding: 15px 0;
-  margin: 15px 0;
+    text-decoration: none;
+    color: #06cc69da;
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 26px;
+    padding: 15px 0;
+    margin: 15px 0;
+    border: none;
+    text-transform: uppercase;
 }
 
 .login-button:hover {
-  color: #06ff82;
+    color: #06ff82;
 }
 
 input[type="checkbox"] {
-  height: 35px;
-  width: 35px;
-  background-color: none;
-  border-color: white;
-  border-width: 3px;
-  border-style: solid;
+    appearance: none;
+    height: 35px;
+    width: 35px;
+    border-color: white;
+    border-width: 3px;
+    border-style: solid;
+    background-image: none;
 }
 
 input[type="checkbox"]:hover {
-  cursor: pointer;
-  border-color: rgba(255, 255, 255, 0.719);
+    cursor: pointer;
+    border-color: rgba(255, 255, 255, 0.719);
 }
-input[type="checkbox"]::after {
-  background-color: red;
+
+input[type="checkbox"]:checked {
+    background-size: cover;
+    background-position: center;
 }
+
