@@ -14,6 +14,8 @@ use App\Repository\ItemRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
 use ErrorException;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -69,7 +71,7 @@ class SecurityController extends  AbstractController
                 $this->em->flush();
                 $this->addFlash('success',"Inventaire Entreprise edité avec succès");
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('user.profile');
 
             } else {
 
@@ -98,8 +100,8 @@ class SecurityController extends  AbstractController
 
 
         }
-
-        return $this->redirectToRoute('user.login');
+        $this->addFlash('success',"Compte Entreprise non-activé");
+        return $this->redirectToRoute('user.profile');
     }
 
 
@@ -123,21 +125,28 @@ class SecurityController extends  AbstractController
 
         $company = new User();
         $form = $this->createForm(UserType::class,$company);
+        $form->add('password',PasswordType::class,[
+            "label" => "Mot De Passe"
+        ]);
+
         $form->handleRequest($request);
-
-
 
         if ($form->isSubmitted() && $form->isValid() ) {
 
             $logoImage = $form->get('logoName')->getData();
-            $logoImage = $this->moveUploadedImages([$logoImage],$company);
-            $company->setLogoName($logoImage[0]) ;
+            if ($logoImage != null) {
+                $logoImage = $this->moveUploadedImages([$logoImage],$company);
+                $company->setLogoName($logoImage[0]) ;
+            } else {
+                $company->setLogoName('default.png');
+            }
+
 
             //TODO GeoLocalisation
             $company->setLatitude(0);
             $company->setLongitude(0);
             $company->setActivated(false);
-            $company->setRoles(["ROLE_COMPANY"]);
+            $company->setRoles(["ROLE_COMPANY_DEACTIVATED"]);
 
             $inventory = new Inventories();
             $inventory->setCompanyName($company);
@@ -162,33 +171,11 @@ class SecurityController extends  AbstractController
         ]);
     }
 
-    public function editCompany(User $company,Request $request) {
-
-        $form = $this->createForm(UserType::class,$company,["validation_groups" => "edit"]);
-        $form->handleRequest($request);
-
-        if ( $form->isSubmitted() && $form->isValid()) {
-
-            $logoImage = $form->get('logoName')->getData();
-            if($logoImage) {
-                $logoImage = $this->moveUploadedImages([$logoImage],$company);
-                $company->setLogoName($logoImage[0]) ;
-            }
-            $this->em->flush();
-            $this->addFlash('success',"Produit Edité avec succees");
-            return $this->redirectToRoute('admin.companies.show');
-        }
-
-        return $this->render('pages/admin/user/admin.product.edit.html.twig',[
-            'form' => $form->createView()
-        ]);
-    }
-
     public function removeCompany(User $company,Request $request) {
 
         if ($this->isCsrfTokenValid('remove' . $company->getId(),$request->get("_token"))) {
 
-            $this->em->remove($company->getCategory());
+            $this->em->remove($company->getInventory());
             $this->em->remove($company);
             $this->em->flush();
             $this->addFlash('success',"Entreprise Supprimée Avec Succès");

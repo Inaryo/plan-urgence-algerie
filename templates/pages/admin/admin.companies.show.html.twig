@@ -20,17 +20,27 @@
         <div class="line"></div>
         <div class="wrapper">
             <div class="button-div">
-                <select name="Filtre">
 
-                    <option value="Wilaya">Wilaya</option>
-                    <option value="Name">Name</option>
-                    <!-- Ajoutez autant d'option que nésessaire-->
+                <form method="POST">
+
+                <select name="filtre_zone">
+                    <option value="null">Zone</option>
+                    {% for zone in zones %}<option value="{{ zone.id }}">{{ zone.name }}</option> {% endfor %}
                 </select>
-                <button class="filter-button">Category</button>
-                <div class="buttons">
-                    <button class="filter-button">Filter</button>
-                    <button class="add">Add</button>
-                </div>
+
+                <select name="filtre_category">
+                    <option value="null">Category</option>
+                    {% for category in categories %} <option value="{{ category.id }}">{{ category.name }}</option> {% endfor %}
+                </select>
+
+                    <div class="buttons">
+                        <button type="submit" class="filter-button">Filter</button>
+                        <!--<button class="add">Add</button> -->
+                    </div>
+                </form>
+
+
+
 
             </div>
             <table>
@@ -48,13 +58,30 @@
                 <tbody>
                 {% for company in companies %}
                 <tr>
+                        <td>{{ company.username }}</td><!--Name value-->
+                        <td>{{ company.zone.name }}</td><!--Zone value-->
+                        <td>{{ company.category.name }}</td><!--Category value-->
+                        <td>{{ company.email }}</td><!--Email value-->
+                        <td>{{ company.mobilephone }}</td><!--Phone number value-->
 
-                    <th>{{ company.username }}</th><!--Name value-->
-                    <th>{{ company.zone.name }}</th><!--Zone value-->
-                    <th>{{ company.category.name }}</th><!--Category value-->
-                    <th>{{ company.email }}</th><!--Email value-->
-                    <th>0{{ company.mobilephone }}</th><!--Phone number value-->
-                    <th><a href="{{ path() }}"></a></th>
+
+                            <td>
+                                {% if company.activated %}
+                                    <a href="{{ path('admin.company.edit',{'id': company.id }) }}" >Editer</a>
+                                {% else %}
+                                    <form method="post" action="{{ path('admin.company.activate',{'id': company.id })  }}" onsubmit="return confirm('Are you sure to activate this account ?')">
+                                        <input type="hidden" name="_method" value="ACTIVATE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ company.id) }}">
+                                        <button type="submit">Activate</button>
+                                    </form>
+
+                                {% endif %}
+                                <form method="post" action="{{ path('admin.company.remove',{id: company.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ company.id) }}">
+                                    <button type="submit">Supprimer</button>
+                                </form>
+                            </td>
                 </tr>
                 {% endfor %}
 
