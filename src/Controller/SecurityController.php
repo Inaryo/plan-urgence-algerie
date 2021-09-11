@@ -71,7 +71,7 @@ class SecurityController extends  AbstractController
                 $this->em->flush();
                 $this->addFlash('success',"Inventaire Entreprise edité avec succès");
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('user.profile');
 
             } else {
 
@@ -101,7 +101,7 @@ class SecurityController extends  AbstractController
 
         }
         $this->addFlash('success',"Compte Entreprise non-activé");
-        return $this->redirectToRoute('user.login');
+        return $this->redirectToRoute('user.profile');
     }
 
 

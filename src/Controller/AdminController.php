@@ -146,15 +146,26 @@ class AdminController extends  AbstractController
     public function showCompanies(Request $request,PaginatorInterface $paginator) {
 
         $search = new UserSearch();
-        $form_search = $this->createForm(UserSearchType::class,$search);
-        $form_search->handleRequest($request);
+
+
+        $zones = $this->zonesRepository->findAll();
+        $categories = $this->categoriesRepository->findAll();
+
+        if ($request->isMethod("post")) {
+            $category = $this->categoriesRepository->find($request->request->get("filtre_category"));
+            if ($category != null ) {$search->setCategory($category);}
+
+            $zone = $this->zonesRepository->find($request->request->get("filtre_zone"));
+            if ($zone != null ) {$search->setZone($zone);}
+        }
 
         $page = $request->get('page',1);
         $companies = $paginator->paginate($this->userRepository->findCompaniesBySearch($search),$page,10);
 
         return $this->render("pages/admin/admin.companies.show.html.twig",[
-            'companies' => $companies,
-            'search_form' => $form_search->createView()
+            "zones" => $zones,
+            "categories" => $categories,
+            'companies' => $companies
         ]);
     }
 
