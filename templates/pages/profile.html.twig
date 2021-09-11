@@ -34,51 +34,37 @@
                     <div class="right-items">
                         <div class="info-item">
                             <p><img src="{{ asset('male.svg','profile_images') }}" alt="icon"> <span
-                                        class="info"></span>
+                                        class="info">{{ app.user.username }}</span>
                             </p>
                             <div class="line"></div>
                         </div>
                         <div class="info-item">
                             <p><img src="{{ asset('calendar.svg','profile_images') }}" alt="icon"> <span
-                                        class="info"></span></p>
+                                        class="info">{{ app.user.category.name }}</span></p>
                             <div class="line"></div>
                         </div>
                         <div class="info-item">
                             <p><img src="{{ asset('male.svg','profile_images') }}" alt="icon"> <span
-                                        class="info"></span>
+                                        class="info">{{ app.user.zone.name }}</span>
                             </p>
                             <div class="line"></div>
                         </div>
-                        <div class="info-item">
-                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info"></span>
-                            </p>
-                            <div class="line"></div>
-                        </div>
-                        <div class="info-item">
-                            <p><img src="{{ asset('linkedin.svg','profile_images') }}" alt="icon"><span
-                                        class="info"></span>
-                            </p>
-                            <div class="line"></div>
-                        </div>
+
                     </div>
                     <div class="right-items">
                         <div class="info-item">
-                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info"></span>
+                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info">
+                                    {{ app.user.email }}
+                                </span>
                             </p>
                             <div class="line"></div>
                         </div>
                         <div class="info-item">
-                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info"></span>
-                            </p>
-                            <div class="line"></div>
-                        </div>
-                        <div class="info-item">
-                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info"></span>
-                            </p>
-                            <div class="line"></div>
-                        </div>
-                        <div class="info-item">
-                            <p><img src="{{ asset('work.svg','profile_images') }}" alt="icon"><span class="info"></span>
+                            <p>
+                                <img src="{{ asset('work.svg','profile_images') }}" alt="icon">
+                                <span class="info">
+                                    0{{ app.user.mobilephone }}
+                                </span>
                             </p>
                             <div class="line"></div>
                         </div>
@@ -89,71 +75,33 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
             <div class="inventory">
                 <h2>inventory</h2>
+                <form method="post">
                 <div class="inventory-items">
+                    {% for key,value in items %}
                     <div class="inventory-item">
                         <div class="item-description">
-                            <h3>Item</h3>
-                            <p>item details</p>
+                            <h3>{{ key }}</h3>
                         </div>
                         <div class="command-buttons">
-                            <button class="plus-button">+</button>
-                            <div class="number-item">00</div>
-                            <button class="minus-button">-</button>
+                            <button type="button" class="plus-button">+</button>
+                            <div class="number-item"> <input name="{{ key }}" value="{{ value }}" type="text">  </div>
+                            <button type="button" class="minus-button">-</button>
                         </div>
                     </div>
-                    <div class="inventory-item">
-                        <div class="item-description">
-                            <h3>Item</h3>
-                            <p>item details</p>
-                        </div>
-                        <div class="command-buttons">
-                            <button class="plus-button">+</button>
-                            <div class="number-item">00</div>
-                            <button class="minus-button">-</button>
-                        </div>
-                    </div>
-                    <div class="inventory-item">
-                        <div class="item-description">
-                            <h3>Item</h3>
-                            <p>item details</p>
-                        </div>
-                        <div class="command-buttons">
-                            <button class="plus-button">+</button>
-                            <div class="number-item">00</div>
-                            <button class="minus-button">-</button>
-                        </div>
-                    </div>
-                    <div class="inventory-item">
-                        <div class="item-description">
-                            <h3>Item</h3>
-                            <p>item details</p>
-                        </div>
-                        <div class="command-buttons">
-                            <button class="plus-button">+</button>
-                            <div class="number-item">00</div>
-                            <button class="minus-button">-</button>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
+
                 <div class="add-save-button">
-                    <button class="add-item">Add</button>
-                    <button class="save-item">Save</button>
+                    <button type="submit" class="add-item">Add</button>
                 </div>
+
+                </form>
             </div>
+
         </section>
-
-
-        <form method="post">
-            {% for key,value in items %}
-                <div><input name="{{ key }}" value="{{ value }}" type="number"> {{ key }} </div>
-            {% endfor %}
-            <button type="submit">Envoyer</button>
-        </form>
     {% endblock %}
 
