@@ -7,7 +7,7 @@
 .section h2 {
   color: #06cc69;
   font-size: 36px;
-  font-weight: 900;
+  font-weight: 700;
 }
 .about p {
   line-height: 40px;
@@ -68,7 +68,7 @@
   flex-direction: column;
   align-items: flex-start;
   color: #06cc69;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 18px;
 }
 .contact .input {
@@ -113,7 +113,7 @@
   padding: 25px;
   color: white;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 50px;
   margin-top: 25px;
   box-shadow: 19px 10px 50px -25px #06cc69;
