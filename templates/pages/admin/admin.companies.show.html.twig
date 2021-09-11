@@ -14,19 +14,18 @@
 {% endblock %}
 
 {% block body %}
+    {% block nav %}{{ parent() }}{% endblock %}
     <section class="show_company">
-        {% block nav %}{{ parent() }}{% endblock %}
         <h1>Companies</h1>
         <div class="line"></div>
         <div class="wrapper">
             <div class="button-div">
                 <select name="Filtre">
 
-                    <option value="Wilaya">Wilaya</option>
-                    <option value="Name">Name</option>
-                    <!-- Ajoutez autant d'option que nésessaire-->
+                    <option value="Wilaya">Name</option>
+                    <option value="Name">Zone</option>
+                    <option value="Category">Category</option>
                 </select>
-                <button class="filter-button">Category</button>
                 <div class="buttons">
                     <button class="filter-button">Filter</button>
                     <button class="add">Add</button>
@@ -46,20 +45,17 @@
                 </thead>
 
                 <tbody>
+
                 {% for company in companies %}
-                <tr>
-
-                    <th>{{ company.username }}</th><!--Name value-->
-                    <th>{{ company.zone.name }}</th><!--Zone value-->
-                    <th>{{ company.category.name }}</th><!--Category value-->
-                    <th>{{ company.email }}</th><!--Email value-->
-                    <th>0{{ company.mobilephone }}</th><!--Phone number value-->
-                    <th><a href="{{ path() }}"></a></th>
-                </tr>
+                    <tr>
+                        <td>{{ company.username }}</td><!--Name value-->
+                        <td>{{ company.zone.name }}</td><!--Zone value-->
+                        <td>{{ company.category.name }}</td><!--Category value-->
+                        <td>{{ company.email }}</td><!--Email value-->
+                        <td>{{ company.mobilephone }}</td><!--Phone number value-->
+                        <td><a href="{{ path() }}"></a></td>
+                    </tr>
                 {% endfor %}
-
-
-
                 </tbody>
             </table>
         </div>
