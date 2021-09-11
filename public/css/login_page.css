@@ -9,7 +9,6 @@ body {
 }
 
 .navigation_bar {
-    width: 100%;
     margin-bottom: 100px;
 }
 
@@ -120,3 +119,9 @@ input[type="checkbox"]:checked {
     background-position: center;
 }
 
+.login_page p{
+    color: white;
+}
+.login_page p a{
+    font-weight: 600;
+}
