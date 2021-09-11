@@ -17,6 +17,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 use Twig\Environment;
 
 
@@ -27,10 +28,15 @@ class HomeController extends  AbstractController
      * @var Environment
      */
     private $render;
+    /**
+     * @var Security
+     */
+    private $security;
 
-    public function __construct(Environment $render)
+    public function __construct(Environment $render,Security $security)
     {
             $this->render = $render;
+        $this->security = $security;
     }
 
 
@@ -39,7 +45,11 @@ class HomeController extends  AbstractController
         $contact = new Contact();
         $form_contact = $this->createForm(ContactType::class,$contact);
 
+
+
         if ($form_contact->isSubmitted() && $form_contact->isValid()) {
+
+
 
             /*$email = new Email();
 

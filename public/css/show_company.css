@@ -29,8 +29,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 80%;
-
+    width: 800px;
 
 }
 
@@ -38,7 +37,6 @@
     display: flex;
     justify-content: space-between;
     width: 250px;
-
 
 }
 
@@ -77,7 +75,6 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    align-items: center;
 }
 
 select {
@@ -142,20 +139,4 @@ table tr {
 table tr td {
     width: max-content;
 
-}
-
-
-#name_filter {
-    height: 40px;
-    width: 270px;
-    -webkit-box-shadow: 5px 5px 0 -1px rgba(8, 100, 177, 0.2);
-    box-shadow: 5px 5px 0 -1px rgba(8, 100, 177, 0.2);
-    border: none;
-    font-size: 18px;
-    font-weight: 500;
-}
-
-#name_filter:focus {
-    outline-color: #06CC69;
-    box-shadow: none;
 }

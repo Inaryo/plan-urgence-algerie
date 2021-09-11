@@ -62,12 +62,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $mobile_phone;
 
-
-
-
-
-
-
     /**
      * @ORM\Column(type="float",  nullable=true)
      */
@@ -80,12 +74,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 150,
-     *      minMessage = "Le logo doit etre supérieur a 5 caracteres",
-     *      maxMessage = "Le logo doit etre inférieur a 150 caracteres"
-     * )
+     *
      */
     private $logoName;
 

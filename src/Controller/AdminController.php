@@ -6,11 +6,13 @@ namespace  App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Item;
+use App\Entity\User;
 use App\Entity\UserSearch;
 use App\Entity\Zone;
 use App\Form\CategoryType;
 use App\Form\ItemType;
 use App\Form\UserSearchType;
+use App\Form\UserType;
 use App\Form\ZoneType;
 use App\Repository\CategoryRepository;
 use App\Repository\ItemRepository;
@@ -18,8 +20,10 @@ use App\Repository\UserRepository;
 use App\Repository\ZoneRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
+use ErrorException;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Twig\Environment;
 
@@ -126,18 +130,69 @@ class AdminController extends  AbstractController
     /////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////
 
+
+    public function activateCompany(Request $request,User $company) {
+        if ($this->isCsrfTokenValid('activate' . $company->getId(),$request->get("_token"))) {
+
+            $company->setActivated(true);
+            $this->em->flush();
+            $this->addFlash('success',"Entreprise activée Avec Succès");
+            return $this->redirectToRoute('admin.companies.show');
+        }
+
+        return $this->redirectToRoute('admin.home');
+    }
+
     public function showCompanies(Request $request,PaginatorInterface $paginator) {
 
         $search = new UserSearch();
-        $form_search = $this->createForm(UserSearchType::class,$search);
-        $form_search->handleRequest($request);
+
+
+        $zones = $this->zonesRepository->findAll();
+        $categories = $this->categoriesRepository->findAll();
+
+        if ($request->isMethod("post")) {
+            $category = $this->categoriesRepository->find($request->request->get("filtre_category"));
+            if ($category != null ) {$search->setCategory($category);}
+
+            $zone = $this->zonesRepository->find($request->request->get("filtre_zone"));
+            if ($zone != null ) {$search->setZone($zone);}
+        }
 
         $page = $request->get('page',1);
         $companies = $paginator->paginate($this->userRepository->findCompaniesBySearch($search),$page,10);
 
         return $this->render("pages/admin/admin.companies.show.html.twig",[
-            'companies' => $companies,
-            'search_form' => $form_search->createView()
+            "zones" => $zones,
+            "categories" => $categories,
+            'companies' => $companies
+        ]);
+    }
+
+    public function editCompany(User $company,Request $request) {
+
+        $logoName = $company->getLogoName();
+
+        $form = $this->createForm(UserType::class,$company,["validation_groups" => "edit"]);
+
+
+        $form->handleRequest($request);
+
+
+        if ( $form->isSubmitted() && $form->isValid()) {
+            $logoImage = $form->get('logoName')->getData();
+            if ($logoImage) {
+                $logoImage= $this->moveUploadedImages([$logoImage],$company);
+                $company->setLogoName($logoImage[0]);
+            }
+
+            $this->em->flush();
+            $this->addFlash('success',"Compte Entreprise Edité avec succees");
+            return $this->redirectToRoute('admin.companies.show');
+        }
+
+        return $this->render('pages/admin/user/admin.company.edit.html.twig',[
+            'form' => $form->createView()
         ]);
     }
 
@@ -249,19 +304,15 @@ class AdminController extends  AbstractController
             $this->em->persist($category);
             $this->em->flush();
             $this->addFlash('success',"Catégorie crée avec succès");
-
             return $this->redirectToRoute('admin.home');
         }
-
         return $this->render("pages/admin/category/admin.category.create.html.twig",[
             "form" => $form->createView()
         ]);
     }
 
 
-    public function editCompany(User $company) {
-        //TODO EDITCOMPANY
-    }
+
 
     public function showCategories(Request $request,PaginatorInterface $paginator) {
 
@@ -273,7 +324,32 @@ class AdminController extends  AbstractController
         ]);
     }
 
+    private function moveUploadedImages(Array $array,User $user): array
+    {
+        $slugger = new Slugify();
+        $return_array = [];
 
+        foreach ($array as $imageData) {
+
+            $safeFilename = $slugger->slugify($user->getUsername());
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageData->guessExtension();
+
+
+            try {
+                $imageData->move(
+                    $this->getParameter('users_directory'),
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw  new ErrorException("Error Uploading file");
+            }
+
+            array_push($return_array,$newFilename);
+            //   }
+        }
+        return $return_array;
+
+    }
 
 }
 

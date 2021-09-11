@@ -13,30 +13,34 @@
 
 {% endblock %}
 
-{% block javascripts %}
-{% endblock  %}
-
-
 {% block body %}
-    {% block nav %}{{ parent() }}{% endblock %}
     <section class="show_company">
+        {% block nav %}{{ parent() }}{% endblock %}
         <h1>Companies</h1>
         <div class="line"></div>
         <div class="wrapper">
             <div class="button-div">
-                <label>
-                    <select name="Filtre">
-                        <option value="Wilaya">Name</option>
-                        <option value="Name">Zone</option>
-                        <option value="Category">Category</option>
-                    </select>
-                </label>
-                <label><input id="name_filter" placeholder="Name"></label>
-                <div class="buttons text_filter">
 
-                    <button class="filter-button">Filter</button>
-                    <button class="add">Add</button>
-                </div>
+                <form method="POST">
+
+                    <select name="filtre_zone">
+                        <option value="null">Zone</option>
+                        {% for zone in zones %}<option value="{{ zone.id }}">{{ zone.name }}</option> {% endfor %}
+                    </select>
+
+                    <select name="filtre_category">
+                        <option value="null">Category</option>
+                        {% for category in categories %} <option value="{{ category.id }}">{{ category.name }}</option> {% endfor %}
+                    </select>
+
+                    <div class="buttons">
+                        <button type="submit" class="filter-button">Filter</button>
+                        <!--<button class="add">Add</button> -->
+                    </div>
+                </form>
+
+
+
 
             </div>
             <table>
@@ -52,7 +56,6 @@
                 </thead>
 
                 <tbody>
-
                 {% for company in companies %}
                     <tr>
                         <td>{{ company.username }}</td><!--Name value-->
@@ -60,426 +63,28 @@
                         <td>{{ company.category.name }}</td><!--Category value-->
                         <td>{{ company.email }}</td><!--Email value-->
                         <td>{{ company.mobilephone }}</td><!--Phone number value-->
-                        <td><a href="{{ path() }}"></a></td>
+
+
+                        <td>
+                            {% if company.activated %}
+                                <a href="{{ path('admin.company.edit',{'id': company.id }) }}" >Editer</a>
+                            {% else %}
+                                <form method="post" action="{{ path('admin.company.activate',{'id': company.id })  }}" onsubmit="return confirm('Are you sure to activate this account ?')">
+                                    <input type="hidden" name="_method" value="ACTIVATE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ company.id) }}">
+                                    <button type="submit">Activate</button>
+                                </form>
+
+                            {% endif %}
+                            <form method="post" action="{{ path('admin.company.remove',{id: company.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ company.id) }}">
+                                <button type="submit">Supprimer</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
 
-
-                <tr>
-
-                    <td>A</td>
-
-                    <td>A</td>
-
-                    <td>A</td>
-
-                    <td>A</td>
-
-                    <td>A</td>
-
-                    <td>A</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>B</td>
-
-                    <td>B</td>
-
-                    <td>B</td>
-
-                    <td>B</td>
-
-                    <td>B</td>
-
-                    <td>B</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>C</td>
-
-                    <td>C</td>
-
-                    <td>C</td>
-
-                    <td>C</td>
-
-                    <td>C</td>
-
-                    <td>C</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>D</td>
-
-                    <td>D</td>
-
-                    <td>D</td>
-
-                    <td>D</td>
-
-                    <td>D</td>
-
-                    <td>D</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>E</td>
-
-                    <td>E</td>
-
-                    <td>E</td>
-
-                    <td>E</td>
-
-                    <td>E</td>
-
-                    <td>E</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>F</td>
-
-                    <td>F</td>
-
-                    <td>F</td>
-
-                    <td>F</td>
-
-                    <td>F</td>
-
-                    <td>F</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>G</td>
-
-                    <td>G</td>
-
-                    <td>G</td>
-
-                    <td>G</td>
-
-                    <td>G</td>
-
-                    <td>G</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>H</td>
-
-                    <td>H</td>
-
-                    <td>H</td>
-
-                    <td>H</td>
-
-                    <td>H</td>
-
-                    <td>H</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>I</td>
-
-                    <td>I</td>
-
-                    <td>I</td>
-
-                    <td>I</td>
-
-                    <td>I</td>
-
-                    <td>I</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>J</td>
-
-                    <td>J</td>
-
-                    <td>J</td>
-
-                    <td>J</td>
-
-                    <td>J</td>
-
-                    <td>J</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>K</td>
-
-                    <td>K</td>
-
-                    <td>K</td>
-
-                    <td>K</td>
-
-                    <td>K</td>
-
-                    <td>K</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>L</td>
-
-                    <td>L</td>
-
-                    <td>L</td>
-
-                    <td>L</td>
-
-                    <td>L</td>
-
-                    <td>L</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>M</td>
-
-                    <td>M</td>
-
-                    <td>M</td>
-
-                    <td>M</td>
-
-                    <td>M</td>
-
-                    <td>M</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>N</td>
-
-                    <td>N</td>
-
-                    <td>N</td>
-
-                    <td>N</td>
-
-                    <td>N</td>
-
-                    <td>N</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>O</td>
-
-                    <td>O</td>
-
-                    <td>O</td>
-
-                    <td>O</td>
-
-                    <td>O</td>
-
-                    <td>O</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>P</td>
-
-                    <td>P</td>
-
-                    <td>P</td>
-
-                    <td>P</td>
-
-                    <td>P</td>
-
-                    <td>P</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>Q</td>
-
-                    <td>Q</td>
-
-                    <td>Q</td>
-
-                    <td>Q</td>
-
-                    <td>Q</td>
-
-                    <td>Q</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>R</td>
-
-                    <td>R</td>
-
-                    <td>R</td>
-
-                    <td>R</td>
-
-                    <td>R</td>
-
-                    <td>R</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>S</td>
-
-                    <td>S</td>
-
-                    <td>S</td>
-
-                    <td>S</td>
-
-                    <td>S</td>
-
-                    <td>S</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>T</td>
-
-                    <td>T</td>
-
-                    <td>T</td>
-
-                    <td>T</td>
-
-                    <td>T</td>
-
-                    <td>T</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>U</td>
-
-                    <td>U</td>
-
-                    <td>U</td>
-
-                    <td>U</td>
-
-                    <td>U</td>
-
-                    <td>U</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>V</td>
-
-                    <td>V</td>
-
-                    <td>V</td>
-
-                    <td>V</td>
-
-                    <td>V</td>
-
-                    <td>V</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>W</td>
-
-                    <td>W</td>
-
-                    <td>W</td>
-
-                    <td>W</td>
-
-                    <td>W</td>
-
-                    <td>W</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>X</td>
-
-                    <td>X</td>
-
-                    <td>X</td>
-
-                    <td>X</td>
-
-                    <td>X</td>
-
-                    <td>X</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>Y</td>
-
-                    <td>Y</td>
-
-                    <td>Y</td>
-
-                    <td>Y</td>
-
-                    <td>Y</td>
-
-                    <td>Y</td>
-
-                <tr>
-
-                <tr>
-
-                    <td>Z</td>
-
-                    <td>Z</td>
-
-                    <td>Z</td>
-
-                    <td>Z</td>
-
-                    <td>Z</td>
-
-                    <td>Z</td>
-
-                <tr>
 
 
                 </tbody>
@@ -488,4 +93,3 @@
 
     </section>
 {% endblock %}
-

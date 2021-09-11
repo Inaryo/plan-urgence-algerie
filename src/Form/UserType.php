@@ -23,9 +23,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('password',PasswordType::class,[
-                "label" => "Mot De Passe"
-            ])
+
             ->add('category',EntityType::class, [
                 'class' => Category::class,
                 'query_builder' => function (CategoryRepository $repository) {
@@ -49,7 +47,8 @@ class UserType extends AbstractType
             ->add('logoName',FileType::class,[
                 'label' => 'Photo De Profil',
                 'data_class' => null,
-
+                'required' => false,
+                "mapped" => false
             ])
             ->add('mobile_phone', NumberType::class, [
                 'label' => 'Numéro de telephone'
