@@ -104,6 +104,17 @@ admin.item.remove:
     requirements:
         id : '\d+'
 
+admin.company.remove:
+    path: /admin/company/remove/{id}
+    controller: App\Controller\Admin\AdminController::removeCompany
+    methods: DELETE
+    requirements:
+        id : '\d+'
+
+admin.company.activate:
+    path: /admin/company/{id}/activate
+    controller: App\Controller\AdminController::activateCompany
+
 admin.company.edit:
     path: /admin/company/{id}/edit
     controller: App\Controller\AdminController::editCompany

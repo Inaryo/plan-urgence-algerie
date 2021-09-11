@@ -46,15 +46,31 @@
                 </thead>
 
                 <tbody>
+
                 {% for company in companies %}
                 <tr>
-
                     <th>{{ company.username }}</th><!--Name value-->
                     <th>{{ company.zone.name }}</th><!--Zone value-->
                     <th>{{ company.category.name }}</th><!--Category value-->
                     <th>{{ company.email }}</th><!--Email value-->
                     <th>0{{ company.mobilephone }}</th><!--Phone number value-->
-                    <th><a href="{{ path() }}"></a></th>
+                    <th>
+                        {% if company.activated %}
+                            <a href="{{ path('admin.company.edit',{'id': company.id }) }}" >Editer</a>
+                        {% else %}
+                            <form method="post" action="{{ path('admin.company.activate',{'id': company.id })  }}" onsubmit="return confirm('Are you sure to activate this account ?')">
+                                <input type="hidden" name="_method" value="ACTIVATE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ company.id) }}">
+                                <button type="submit">Activate</button>
+                            </form>
+
+                        {% endif %}
+                        <form method="post" action="{{ path('admin.company.remove',{id: company.id}) }}" onsubmit="return confirm('Are you sure ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ company.id) }}">
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </th>
                 </tr>
                 {% endfor %}
 
