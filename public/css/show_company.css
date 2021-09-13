@@ -27,18 +27,18 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 100px;
     width: 800px;
-
+    height: max-content;
 }
 
-.buttons {
+form {
     display: flex;
     justify-content: space-between;
-    width: 250px;
-
+    width: 100%;
+    align-items: center;
 }
+
 
 .filter-button {
     border: none;
@@ -55,6 +55,7 @@
     cursor: pointer;
 }
 
+/*
 .add {
     border: none;
     color: white;
@@ -70,12 +71,8 @@
     background-color: rgba(8, 88, 48, 0.82);
     cursor: pointer;
 }
+*/
 
-.button-div {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
 
 select {
     background-color: #085830;
@@ -102,11 +99,23 @@ table {
     width: 100%;
     text-align: center;
     padding: 10px 25px;
-    max-height: 500px;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
 
+}
+
+#name-filter {
+    height: 40px;
+    width: 270px;
+    -webkit-box-shadow: 5px 5px 0px -1px rgba(8, 100, 177, 0.2);
+    box-shadow: 5px 5px 0px -1px rgba(8, 100, 177, 0.2);
+    border: none;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+#name-filter:focus {
+    outline-color: #06cc69;
+    outline-width: 1px;
+    box-shadow: none;
 }
 
 ::-webkit-scrollbar {
@@ -129,14 +138,7 @@ table {
     box-shadow: inset 7px 10px 12px 0 #F0F0F0;
 }
 
-table tr {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-}
-
-table tr td {
-    width: max-content;
-
+.vanish{
+    display: none;
+    height: 0;
 }

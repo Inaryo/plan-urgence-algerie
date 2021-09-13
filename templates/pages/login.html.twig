@@ -20,6 +20,7 @@
     {% endblock %}
 
 
+
 	{% block body %}
         {#
         {% block nav %}
@@ -181,4 +182,8 @@
             </div>
         </section>
 
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="{{ asset('profile.js','js') }}"></script>
     {% endblock %}

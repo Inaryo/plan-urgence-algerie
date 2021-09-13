@@ -12,37 +12,34 @@
     </style>
 
 {% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('name_filter.js','js') }}"></script>
+{% endblock %}
 
 {% block body %}
+    {% block nav %}{{ parent() }}{% endblock %}
     <section class="show_company">
-        {% block nav %}{{ parent() }}{% endblock %}
         <h1>Companies</h1>
         <div class="line"></div>
         <div class="wrapper">
-            <div class="button-div">
+            <form method="POST">
+                <select name="filtre_zone">
+                    <option value="null">Zone</option>
+                    {% for zone in zones %}
+                        <option value="{{ zone.id }}">{{ zone.name }}</option> {% endfor %}
+                </select>
 
-                <form method="POST">
+                <select name="filtre_category">
+                    <option value="null">Category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option> {% endfor %}
+                </select>
+                <button type="submit" class="filter-button">Filter</button>
+                <input type="text" id="name-filter" placeholder="Name">
 
-                    <select name="filtre_zone">
-                        <option value="null">Zone</option>
-                        {% for zone in zones %}<option value="{{ zone.id }}">{{ zone.name }}</option> {% endfor %}
-                    </select>
-
-                    <select name="filtre_category">
-                        <option value="null">Category</option>
-                        {% for category in categories %} <option value="{{ category.id }}">{{ category.name }}</option> {% endfor %}
-                    </select>
-
-                    <div class="buttons">
-                        <button type="submit" class="filter-button">Filter</button>
-                        <!--<button class="add">Add</button> -->
-                    </div>
-                </form>
+            </form>
 
 
-
-
-            </div>
             <table>
                 <thead>
                 <tr>
@@ -56,39 +53,42 @@
                 </thead>
 
                 <tbody>
-                {% for company in companies %}
-                    <tr>
-                        <td>{{ company.username }}</td><!--Name value-->
-                        <td>{{ company.zone.name }}</td><!--Zone value-->
-                        <td>{{ company.category.name }}</td><!--Category value-->
-                        <td>{{ company.email }}</td><!--Email value-->
-                        <td>{{ company.mobilephone }}</td><!--Phone number value-->
+                 {% for company in companies %}
+                 <tr class="row">
+                 <td class="name">{{ company.username }}</td><!--Name value-->
+                 <td>{{ company.zone.name }}</td><!--Zone value-->
+                 <td>{{ company.category.name }}</td><!--Category value-->
+                 <td>{{ company.email }}</td><!--Email value-->
+                 <td>{{ company.mobilephone }}</td><!--Phone number value-->
 
 
-                        <td>
-                            {% if company.activated %}
-                                <a href="{{ path('admin.company.edit',{'id': company.id }) }}" >Editer</a>
-                            {% else %}
-                                <form method="post" action="{{ path('admin.company.activate',{'id': company.id })  }}" onsubmit="return confirm('Are you sure to activate this account ?')">
-                                    <input type="hidden" name="_method" value="ACTIVATE">
-                                    <input type="hidden" name="_token" value="{{ csrf_token('activate' ~ company.id) }}">
-                                    <button type="submit">Activate</button>
-                                </form>
+                 <td>
+                 {% if company.activated %}
+                 <a href="{{ path('admin.company.edit',{'id': company.id }) }}">Editer</a>
+                 {% else %}
+                 <form method="post" action="{{ path('admin.company.activate',{'id': company.id }) }}"
+                 onsubmit="return confirm('Are you sure to activate this account ?')">
+                 <input type="hidden" name="_method" value="ACTIVATE">
+                 <input type="hidden" name="_token"
+                 value="{{ csrf_token('activate' ~ company.id) }}">
+                 <button type="submit">Activate</button>
+                 </form>
 
-                            {% endif %}
-                            <form method="post" action="{{ path('admin.company.remove',{id: company.id}) }}" onsubmit="return confirm('Are you sure ?')">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ company.id) }}">
-                                <button type="submit">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                {% endfor %}
-
+                 {% endif %}
+                 <form method="post" action="{{ path('admin.company.remove',{id: company.id}) }}"
+                 onsubmit="return confirm('Are you sure ?')">
+                 <input type="hidden" name="_method" value="DELETE">
+                 <input type="hidden" name="_token" value="{{ csrf_token('remove' ~ company.id) }}">
+                 <button type="submit">Supprimer</button>
+                 </form>
+                 </td>
+                 </tr>
+                 {% endfor %}
 
 
                 </tbody>
             </table>
+
         </div>
 
     </section>
